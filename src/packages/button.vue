@@ -1,6 +1,8 @@
 <template>
-  <button class="zh-button" :class="btnClass">
-    <zh-icon :icon="icon" v-if="icon" class="icon"></zh-icon>
+  <button class="zh-button" :class="btnClass" :disabled="loading" @click="$emit('click', $event)">
+    <zh-icon :icon="icon" v-if="icon && !loading" class="icon"></zh-icon>
+    <!-- loading -->
+    <zh-icon icon="loading" v-if="loading" class="icon"></zh-icon>
     <span v-if="this.$slots.default">
       <slot></slot>
     </span>
@@ -31,7 +33,11 @@ export default {
         if (!['left', 'right'].includes(type)) {
           console.error('iconPosition属性必须为：left|right');
         }
+        return true;
       }
+    },
+    loading: {
+      type: Boolean
     }
   },
   computed: {
@@ -145,6 +151,10 @@ $active-color: #3a8ee6;
       margin-left: 0px;
       margin-right: 4px;
     }
+  }
+
+  &[disabled] {
+    cursor: not-allowed;
   }
 }
 </style>

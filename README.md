@@ -1,24 +1,15 @@
-# zhu-ui-2020
+# zhu-ui
+[![npm version](https://badge.fury.io/js/zhu-ui.svg)](https://badge.fury.io/js/zhu-ui)
 
-## Project setup
-```
-yarn install
-```
-
-### Compiles and hot-reloads for development
-```
-yarn serve
+## QuickStart
+```bash
+npm install zh-ui
 ```
 
-### Compiles and minifies for production
+## usage
 ```
-yarn build
-```
-
-### Run your unit tests
-```
-yarn test:unit
+import zhuUi from 'zhu-ui'
+import 'zhu-ui/dist/zhu-ui.css'
+Vue.use(zhuUi)
 ```
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
