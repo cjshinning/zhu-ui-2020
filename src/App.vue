@@ -35,6 +35,75 @@
     </zh-button-group>
 
     <zh-icon icon="taxi"></zh-icon>
+
+    <hr>
+    <zh-row>
+      <zh-col :span="12">
+        <div class="red">aaa</div>
+      </zh-col>
+      <zh-col :span="12">
+        <div class="red">bbb</div>
+      </zh-col>
+    </zh-row>
+    <zh-row>
+      <zh-col :span="24">
+        <div class="green"></div>
+      </zh-col>
+    </zh-row>
+
+    <hr>
+
+    <zh-row>
+      <zh-col :span="6">
+        <div class="red">aaa</div>
+      </zh-col>
+      <zh-col :span="6" :offset="12">
+        <div class="green">bbb</div>
+      </zh-col>
+    </zh-row>
+
+    <hr>
+
+    <div style="width: 95%; margin: 0 auto;">
+      <zh-row :gutter="20">
+        <zh-col :span="6">
+          <div class="red">aaa</div>
+        </zh-col>
+        <zh-col :span="6">
+          <div class="green">bbb</div>
+        </zh-col>
+        <zh-col :span="6">
+          <div class="red">aaa</div>
+        </zh-col>
+        <zh-col :span="6">
+          <div class="green">bbb</div>
+        </zh-col>
+      </zh-row>
+
+      <hr>
+
+      <zh-row justify="space-around">
+        <zh-col :span="3">
+          <div class="red">aaa</div>
+        </zh-col>
+        <zh-col :span="3">
+          <div class="red">aaa</div>
+        </zh-col>
+      </zh-row>
+    </div>
+
+
+    <zh-container>
+      <zh-header>Header</zh-header>
+      <zh-container>
+        <zh-aside width="200px">Aside</zh-aside>
+        <zh-container>
+          <zh-main>Main</zh-main>
+          <zh-footer>Footer</zh-footer>
+        </zh-container>
+      </zh-container>
+    </zh-container>
+
   </div>
 </template>
 
@@ -49,4 +118,47 @@ export default {
 }
 </script>
 
-<style lang="scss"></style>
+<style lang="scss">
+.red {
+  background: red;
+}
+
+.green {
+  background: green;
+}
+
+.zh-header,
+.zh-footer {
+  background-color: #B3C0D1;
+  color: #333;
+  text-align: center;
+  line-height: 60px;
+}
+
+.zh-aside {
+  background-color: #D3DCE6;
+  color: #333;
+  text-align: center;
+  line-height: 200px;
+}
+
+.zh-main {
+  background-color: #E9EEF3;
+  color: #333;
+  text-align: center;
+  line-height: 160px;
+}
+
+body>.zh-container {
+  margin-bottom: 40px;
+}
+
+.zh-container:nth-child(5) .zh-aside,
+.zh-container:nth-child(6) .zh-aside {
+  line-height: 260px;
+}
+
+.zh-container:nth-child(7) .zh-aside {
+  line-height: 320px;
+}
+</style>
