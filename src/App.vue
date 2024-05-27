@@ -104,6 +104,15 @@
       </zh-container>
     </zh-container>
 
+    <hr>
+    <zh-input v-model="value" type="text" placeholder="请输入内容" name="username"></zh-input>
+    <zh-input v-model="value" type="password" placeholder="请输入内容" name="username"></zh-input>
+    <zh-input v-model="value" type="password" :disabled="true" placeholder="请输入内容" name="username"></zh-input>
+    <zh-input v-model="value" type="password" placeholder="请输入内容" name="username" clearable></zh-input>
+    <zh-input v-model="value" type="password" placeholder="请输入内容" name="username" showPassword></zh-input>
+    <zh-input v-model="value" type="password" placeholder="请输入内容" name="username" prefix-icon="edit"></zh-input>
+    <zh-input v-model="value" type="password" placeholder="请输入内容" name="username" suffix-icon="edit"></zh-input>
+    {{ value }}
   </div>
 </template>
 
@@ -113,6 +122,11 @@ export default {
   methods: {
     fn(e) {
       console.log(e);
+    }
+  },
+  data() {
+    return {
+      value: ''
     }
   }
 }
