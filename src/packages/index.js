@@ -12,6 +12,7 @@ import Footer from "./container/footer.vue";
 import Main from "./container/main.vue";
 import Input from "./input.vue";
 import Upload from "./upload/upload.vue";
+import Progress from "./progress.vue";
 
 const install = (Vue) => {
   Vue.component(Button.name, Button);
@@ -26,6 +27,7 @@ const install = (Vue) => {
   Vue.component(Main.name, Main);
   Vue.component(Input.name, Input);
   Vue.component(Upload.name, Upload);
+  Vue.component(Progress.name, Progress);
 };
 
 // 有可能通过script标签的引入方式

@@ -168,7 +168,7 @@
      -->
     <zh-upload
       name="avatar"
-      action=""
+      action="http://localhost:3000/upload"
       :file-list="fileList"
       :limit="3"
       accept="image/jpeg"
@@ -179,6 +179,7 @@
       :on-error="handleError"
       :on-progress="handleProgress"
       :beforeUpload="beforeUpload"
+      :drag="true"
     >
       <zh-button type="primary" icon="upload">点击上传</zh-button>
       <div slot="tip">只能上传jpg文件，且不超过500kb</div>
@@ -192,10 +193,7 @@ export default {
   data() {
     return {
       value: "",
-      fileList: [
-        { url: "xxx", name: "测试代码" },
-        { url: "xxx", name: "测试代码" },
-      ],
+      fileList: [{ url: "xxx", name: "测试代码" }],
     };
   },
   methods: {
@@ -207,13 +205,13 @@ export default {
       console.log("用户传递的已经超过预期了");
     },
     handleChange(file) {
-      console.log(file);
+      // console.log(file);
     },
     handleSuccess() {},
     handleError() {},
     handleProgress() {},
     beforeUpload(rawFile) {
-      let limitSize = rawFile.size / 1024 > 100;
+      let limitSize = rawFile.size / 1024 > 500;
       if (limitSize) {
         console.log("当前超过了最大限制");
         return false;

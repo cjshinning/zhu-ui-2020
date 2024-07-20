@@ -1,28 +1,54 @@
 <template>
   <div class="zh-upload">
-    <div class="zh-upload-btn" @click="handleClick">
-      <slot></slot>
-    </div>
-    <input
-      type="file"
+    <upload-dragger
+      v-if="drag"
       :accept="accept"
-      :multiple="multiple"
-      @change="handleChange"
-      :name="name"
-      ref="input"
-      class="input"
-    />
+      @file="uploadFiles"
+    ></upload-dragger>
+    <template v-else>
+      <div class="zh-upload-btn" @click="handleClick">
+        <slot></slot>
+      </div>
+      <input
+        type="file"
+        :accept="accept"
+        :multiple="multiple"
+        @change="handleChange"
+        :name="name"
+        ref="input"
+        class="input"
+      />
+    </template>
+
     <div>
       <slot name="tip"></slot>
     </div>
 
-    {{ files.length }}
+    <ul>
+      <li v-for="file in files" :key="file.uid">
+        <div class="list-item">
+          <zh-icon icon="file"></zh-icon>
+          {{ file.name }}
+          {{ file.status }}
+          <zh-progress
+            v-if="file.status == 'uploading'"
+            :percentage="file.percentage"
+          ></zh-progress>
+          <zh-icon icon="close"></zh-icon>
+        </div>
+      </li>
+    </ul>
   </div>
 </template>
 
 <script>
+import ajax from "./ajax";
+import uploadDragger from "./upload-dragger.vue";
 export default {
   name: "zh-upload",
+  components: {
+    uploadDragger,
+  },
   props: {
     name: {
       type: String,
@@ -45,11 +71,20 @@ export default {
     onError: Function,
     onProgress: Function,
     beforeUpload: Function,
+    httpRequest: {
+      type: Function,
+      default: ajax,
+    },
+    drag: {
+      type: Boolean,
+      default: false,
+    }, //面试的时候，让你设计一个组件，用户要有哪些功能，你需要暴露给用户哪些功能，再考虑用户的行为
   },
   data() {
     return {
       tempIndex: 1,
-      files: [], //存储要展示的列表
+      files: [], //存储要展示的列表，可以在这里删除你要删除的文件（询问用户？）
+      reqs: {},
     };
   },
   watch: {
@@ -86,8 +121,59 @@ export default {
       this.files.push(file); //将当前用户上传的文件Push到列表中，过一会儿要显示
       this.onChange && this.onChange(file);
     },
-    post() {
+    getFile(rawFile) {
+      return this.files.find((file) => file.uid == rawFile.uid);
+    },
+    handleProgress(ev, rawFile) {
+      // 通过源文件，用户上传的文件 -> 格式化的文件
+      let file = this.getFile(rawFile); //这个file就是当前格式化后的
+      file.status = "uploading";
+      file.percentage = ev.percent || 0; //赋值上传进度
+      this.onProgress(ev, rawFile); //调用用户的回调
+    },
+    handleSuccess(res, rawFile) {
+      let file = this.getFile(rawFile);
+      file.status = "success";
+      this.onSuccess(res, rawFile);
+      this.onChange(file);
+    },
+    handleError(err, rawFile) {
+      let file = this.getFile(rawFile);
+      file.status = "fail";
+      this.onError(err, rawFile);
+      this.onChange(file);
+      delete this.reqs[file.uid]; //已经失败的ajax，不需要后续再中断请求了
+    },
+    post(rawFile) {
       // 真正的上传逻辑
+      const uid = rawFile.uid;
+      const options = {
+        file: rawFile, //源文件
+        filename: this.name, //avatar
+        action: this.action,
+        onProgress: (ev) => {
+          // 处理上传中的状态
+          console.log("上传中", ev);
+          this.handleProgress(ev, rawFile);
+        },
+        onSuccess: (res) => {
+          // 处理成功的状态
+          console.log("上传成功", res);
+          this.handleSuccess(res, rawFile);
+        },
+        onError: (err) => {
+          // 处理失败的状态
+          console.log("上传失败", err);
+          this.handleError(err, rawFile);
+        },
+      };
+
+      let req = this.httpRequest(options);
+      this.reqs[uid] = req; //每个ajax 先存起来，稍微可以取消请求
+
+      if (req && req.then) {
+        req.then(options.onSuccess, options.onError);
+      }
     },
     upload(rawFile) {
       // 上传文件
