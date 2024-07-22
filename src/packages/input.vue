@@ -2,57 +2,75 @@
   <div class="zh-input" :class="inputClass">
     <zh-icon :icon="prefixIcon" v-if="prefixIcon"></zh-icon>
     <zh-icon :icon="suffixIcon" v-if="suffixIcon"></zh-icon>
-    <input :type="showPassword ? (passwordVisible ? 'text' : 'password') : type" :value="value" :placeholder="placeholder"
-      :name="name" :disabled="disabled" @input="$emit('input', $event.target.value)" ref="input">
-    <zh-icon icon="roundclose" v-if="clearable && value" @click.native="$emit('input', '')"
-      @mousedown.native.prevent></zh-icon>
-    <zh-icon icon="attentionfavorfill" v-if="showPassword && value" @click.native="changeStatus"></zh-icon>
+    <input
+      :type="showPassword ? (passwordVisible ? 'text' : 'password') : type"
+      :value="value"
+      :placeholder="placeholder"
+      :name="name"
+      :disabled="disabled"
+      @input="$emit('input', $event.target.value)"
+      ref="input"
+      @focus="$emit('focus', $event.target.value)"
+      @blur="$emit('blur', $event.target.value)"
+      @change="$emit('change', $event.target.value)"
+    />
+    <zh-icon
+      icon="roundclose"
+      v-if="clearable && value"
+      @click.native="$emit('input', '')"
+      @mousedown.native.prevent
+    ></zh-icon>
+    <zh-icon
+      icon="attentionfavorfill"
+      v-if="showPassword && value"
+      @click.native="changeStatus"
+    ></zh-icon>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'zh-input',
+  name: "zh-input",
   props: {
     name: {
       type: String,
-      default: null
+      default: null,
     },
     type: {
       type: String,
-      default: 'text'
+      default: "text",
     },
     placeholder: {
       type: String,
-      default: '请输入内容'
+      default: "请输入内容",
     },
     value: {
       type: String,
-      default: ''
+      default: "",
     },
     disabled: {
       type: Boolean,
-      default: false
+      default: false,
     },
     clearable: {
       type: Boolean,
-      default: false
+      default: false,
     },
     showPassword: {
       type: Boolean,
-      default: false
+      default: false,
     },
     suffixIcon: {
-      type: String
+      type: String,
     },
     prefixIcon: {
-      type: String
-    }
+      type: String,
+    },
   },
   data() {
     return {
-      passwordVisible: false
-    }
+      passwordVisible: false,
+    };
   },
   computed: {
     inputClass() {
@@ -61,24 +79,24 @@ export default {
         classes.push(`zh-input-suffix-icon`);
       }
       if (this.prefixIcon) {
-        classes.push('zh-input-prefix-icon');
+        classes.push("zh-input-prefix-icon");
       }
       return classes;
-    }
+    },
   },
   methods: {
     changeStatus() {
       this.passwordVisible = !this.passwordVisible;
       this.$nextTick(() => {
         this.$refs.input.focus();
-      })
-    }
-  }
-}
+      });
+    },
+  },
+};
 </script>
 
 <style lang="scss">
-@import '../styles/_var.scss';
+@import "../styles/_var.scss";
 
 .zh-input {
   position: relative;

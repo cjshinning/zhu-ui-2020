@@ -13,6 +13,8 @@ import Main from "./container/main.vue";
 import Input from "./input.vue";
 import Upload from "./upload/upload.vue";
 import Progress from "./progress.vue";
+import DatePicker from "./date-picker/date-picker.vue";
+import DateRangePicker from "./date-picker/date-range-picker.vue";
 
 const install = (Vue) => {
   Vue.component(Button.name, Button);
@@ -28,6 +30,8 @@ const install = (Vue) => {
   Vue.component(Input.name, Input);
   Vue.component(Upload.name, Upload);
   Vue.component(Progress.name, Progress);
+  Vue.component(DatePicker.name, DatePicker);
+  Vue.component(DateRangePicker.name, DateRangePicker);
 };
 
 // 有可能通过script标签的引入方式

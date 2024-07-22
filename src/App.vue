@@ -184,6 +184,12 @@
       <zh-button type="primary" icon="upload">点击上传</zh-button>
       <div slot="tip">只能上传jpg文件，且不超过500kb</div>
     </zh-upload>
+
+    <!-- 语法糖的绑定 value @input -->
+    {{ value1 }}<br />
+    <zh-date-picker v-model="value1"></zh-date-picker>
+    <!-- {{ value2 }}
+    <zh-date-range-picker v-model="value2"></zh-date-range-picker> -->
   </div>
 </template>
 
@@ -194,6 +200,8 @@ export default {
     return {
       value: "",
       fileList: [{ url: "xxx", name: "测试代码" }],
+      value1: "",
+      value2: [],
     };
   },
   methods: {
