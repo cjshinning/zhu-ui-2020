@@ -190,6 +190,30 @@
     <zh-date-picker v-model="value1"></zh-date-picker>
     <!-- {{ value2 }}
     <zh-date-range-picker v-model="value2"></zh-date-range-picker> -->
+
+    <br />
+    <br />
+
+    <!-- 封装组件：1、怎么设计这个组件 2、如何拆分 -->
+    <div style="margin: 0 200px">
+      <zh-carousel
+        height="200px"
+        :autoplay="true"
+        :delay="2000"
+        :initial-index="1"
+        :loop="true"
+      >
+        <zh-carousel-item>
+          <div class="content" style="background: red">内容1</div>
+        </zh-carousel-item>
+        <zh-carousel-item>
+          <div class="content" style="background: blue">内容2</div>
+        </zh-carousel-item>
+        <zh-carousel-item>
+          <div class="content" style="background: yellow">内容3</div>
+        </zh-carousel-item>
+      </zh-carousel>
+    </div>
   </div>
 </template>
 
@@ -275,5 +299,10 @@ body > .zh-container {
 
 .zh-container:nth-child(7) .zh-aside {
   line-height: 320px;
+}
+
+.content {
+  width: 100%;
+  height: 100%;
 }
 </style>
