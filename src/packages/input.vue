@@ -12,7 +12,7 @@
       ref="input"
       @focus="$emit('focus', $event.target.value)"
       @blur="$emit('blur', $event.target.value)"
-      @change="$emit('change', $event.target.value)"
+      @change="$emit('change', $event)"
     />
     <zh-icon
       icon="roundclose"
