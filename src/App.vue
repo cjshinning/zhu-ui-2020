@@ -195,7 +195,7 @@
     <br />
 
     <!-- 封装组件：1、怎么设计这个组件 2、如何拆分 -->
-    <div style="margin: 0 200px">
+    <div>
       <zh-carousel
         height="200px"
         :autoplay="true"
