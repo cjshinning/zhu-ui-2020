@@ -196,7 +196,7 @@
 
     <!-- 封装组件：1、怎么设计这个组件 2、如何拆分 -->
     <div>
-      <zh-carousel
+      <!-- <zh-carousel
         height="200px"
         :autoplay="true"
         :delay="2000"
@@ -212,8 +212,15 @@
         <zh-carousel-item>
           <div class="content" style="background: yellow">内容3</div>
         </zh-carousel-item>
-      </zh-carousel>
+      </zh-carousel> -->
     </div>
+
+    <zh-table :columns="columns" :data="data"></zh-table>
+    <zh-pagination
+      :total="10"
+      :pager-count="5"
+      :current-page.sync="currentPage"
+    ></zh-pagination>
   </div>
 </template>
 
@@ -226,6 +233,38 @@ export default {
       fileList: [{ url: "xxx", name: "测试代码" }],
       value1: "",
       value2: [],
+      currentPage: 6,
+      columns: [
+        {
+          title: "name",
+          key: "name",
+        },
+        {
+          title: "Age",
+          key: "age",
+        },
+        {
+          title: "Address",
+          key: "address",
+        },
+      ],
+      data: [
+        {
+          name: "John Brown",
+          age: 32,
+          address: "New York No. 1 Lake Park",
+        },
+        {
+          name: "Jim Green",
+          age: 42,
+          address: "London No. 1 Lake Park",
+        },
+        {
+          name: "Joe Black",
+          age: 32,
+          address: "Sidney No. 1 Lake Park",
+        },
+      ],
     };
   },
   methods: {
