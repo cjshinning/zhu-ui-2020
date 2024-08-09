@@ -215,7 +215,21 @@
       </zh-carousel> -->
     </div>
 
-    <zh-table :columns="columns" :data="data"></zh-table>
+    <zh-table
+      :columns="columns"
+      :data="data"
+      @on-select="select"
+      @on-select-all="selectAll"
+      @on-sort-change="change"
+      height="200px"
+    >
+      <template slot="name" slot-scope="{ row, col }">
+        <h1>{{ row[col.key] }}</h1>
+      </template>
+      <template slot="action" slot-scope="{ row, col }">
+        <zh-button>删除</zh-button>
+      </template>
+    </zh-table>
     <zh-pagination
       :total="10"
       :pager-count="5"
@@ -236,16 +250,28 @@ export default {
       currentPage: 6,
       columns: [
         {
+          type: "selection",
+          width: "60px",
+        },
+        {
           title: "name",
           key: "name",
+          slot: "name",
         },
         {
           title: "Age",
           key: "age",
+          sortable: "custom", //默认排序 排序方法 自定义排序
+          sortType: "asc",
         },
         {
           title: "Address",
           key: "address",
+        },
+        {
+          title: "operator",
+          slot: "action",
+          key: "operator",
         },
       ],
       data: [
@@ -261,13 +287,28 @@ export default {
         },
         {
           name: "Joe Black",
-          age: 32,
+          age: 18,
           address: "Sidney No. 1 Lake Park",
+        },
+        {
+          name: "Jim Green",
+          age: 10,
+          address: "London No. 1 Lake Park",
         },
       ],
     };
   },
   methods: {
+    change({ col, type }) {
+      console.log(col, type);
+    },
+    select(selection, row) {
+      // selection 表示选中的所有 row表示当前选中
+      console.log(selection, row);
+    },
+    selectAll(selection) {
+      console.log(selection);
+    },
     fn(e) {
       console.log(e);
     },
